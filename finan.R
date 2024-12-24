@@ -1,0 +1,27 @@
+library(readxl)
+library(writexl)
+library(seasonal)
+
+finan01 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Préstamos RC deflact MIX",col_names = FALSE,range = "B6:B120")
+finan01 = ts(finan01$...1, frequency = 4, start = c(1996,1))
+finan02 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Depósitos RC deflact MIX",col_names = FALSE,range = "B6:B120")
+finan02 = ts(finan02$...1, frequency = 4, start = c(1996,1))
+finan03 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Dep C Deflac MIX",col_names = FALSE,range = "B6:B120")
+finan03 = ts(finan03$...1, frequency = 4, start = c(1996,1))
+finan04 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Dep SF Deflac MIX",col_names = FALSE,range = "B6:B120")
+finan04 = ts(finan04$...1, frequency = 4, start = c(1996,1))
+
+
+finan01d = seas(finan01, x11="")
+finan02d = seas(finan02, x11="")
+finan03d = seas(finan03, x11="")
+finan04d = seas(finan04, x11="")
+
+finan01_conc = cbind(finan01d$series$d11,blanco,blanco,finan01d$series$d12)
+write_xlsx(as.data.frame(finan01_conc),"finan01_d11_d12.xlsx")
+finan02_conc = cbind(finan02d$series$d11,blanco,blanco,finan02d$series$d12)
+write_xlsx(as.data.frame(finan02_conc),"finan02_d11_d12.xlsx")
+finan03_conc = cbind(finan03d$series$d11,blanco,blanco,finan03d$series$d12)
+write_xlsx(as.data.frame(finan03_conc),"finan03_d11_d12.xlsx")
+finan04_conc = cbind(finan04d$series$d11,blanco,blanco,finan04d$series$d12)
+write_xlsx(as.data.frame(finan04_conc),"finan04_d11_d12.xlsx")
