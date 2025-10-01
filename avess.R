@@ -3,16 +3,16 @@ library(writexl)
 library(seasonal)
 library(forecast)
 
-# Septiembre 2024
-aves01 = read_xlsx("23-Aves.xlsx",sheet = "SF",col_names = FALSE,range = "B6:B206")
+# Julio 2025
+aves01 = read_xlsx("23-Aves.xlsx",sheet = "SF",col_names = FALSE,range = "B6:B216")
 aves01 = ts(aves01$...1, frequency = 12, start = c(2008,1))
-aves02 = read_xlsx("23-Aves.xlsx",sheet = "C",col_names = FALSE,range = "B6:B206")
+aves02 = read_xlsx("23-Aves.xlsx",sheet = "C",col_names = FALSE,range = "B6:B216")
 aves02 = ts(aves02$...1, frequency = 12, start = c(2008,1))
-aves03 = read_xlsx("23-Aves.xlsx",sheet = "ER",col_names = FALSE,range = "B6:B206")
+aves03 = read_xlsx("23-Aves.xlsx",sheet = "ER",col_names = FALSE,range = "B6:B216")
 aves03 = ts(aves03$...1, frequency = 12, start = c(2008,1))
-aves04 = read_xlsx("23-Aves.xlsx",sheet = "Precio Pollo",col_names = FALSE,range = "B4:B120")
+aves04 = read_xlsx("23-Aves.xlsx",sheet = "Precio Pollo",col_names = FALSE,range = "B4:B130")
 aves04 = ts(aves04$...1, frequency = 12, start = c(2015,1))
-aves05 = read_xlsx("23-Aves.xlsx",sheet = "Precio deflactado Pollo",col_names = FALSE,range = "B4:B120")
+aves05 = read_xlsx("23-Aves.xlsx",sheet = "Precio deflactado Pollo",col_names = FALSE,range = "B4:B130")
 aves05 = ts(aves05$...1, frequency = 12, start = c(2015,1))
 
 model04 = auto.arima(aves04)

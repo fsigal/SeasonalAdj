@@ -2,16 +2,16 @@ library(readxl)
 library(writexl)
 library(seasonal)
 
-# Septiembre 2024
-porci01 = read_xlsx("25-Porcinos.xlsx",sheet = "SF",col_names = FALSE,range = "B5:B169")
+# Julio 2025
+porci01 = read_xlsx("25-Porcinos.xlsx",sheet = "SF",col_names = FALSE,range = "B5:B179")
 porci01 = ts(porci01$...1, frequency = 12, start = c(2011,1))
-porci02 = read_xlsx("25-Porcinos.xlsx",sheet = "C",col_names = FALSE,range = "B5:B169")
+porci02 = read_xlsx("25-Porcinos.xlsx",sheet = "C",col_names = FALSE,range = "B5:B179")
 porci02 = ts(porci02$...1, frequency = 12, start = c(2011,1))
-porci03 = read_xlsx("25-Porcinos.xlsx",sheet = "ER",col_names = FALSE,range = "B5:B169")
+porci03 = read_xlsx("25-Porcinos.xlsx",sheet = "ER",col_names = FALSE,range = "B5:B179")
 porci03 = ts(porci03$...1, frequency = 12, start = c(2011,1))
-porci04 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio Capón General",col_names = FALSE,range = "B4:B123")
+porci04 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio Capón General",col_names = FALSE,range = "B4:B133")
 porci04 = ts(porci04$...1, frequency = 12, start = c(2014,10))
-porci05 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio deflactado Capón General",col_names = FALSE,range = "B4:B123")
+porci05 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio deflactado Capón General",col_names = FALSE,range = "B4:B133")
 porci05 = ts(porci05$...1, frequency = 12, start = c(2014,10))
 
 model04 = auto.arima(porci04)

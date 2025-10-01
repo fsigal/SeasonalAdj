@@ -2,10 +2,10 @@ library(readxl)
 library(writexl)
 library(seasonal)
 
-# Septiembre 2024
-autos01 = read_xlsx("15- Automotriz.xlsx",sheet = "Produccion Nacional",col_names = FALSE,range = "B7:B351")
+# Marzo 2025
+autos01 = read_xlsx("15- Automotriz.xlsx",sheet = "Produccion Nacional",col_names = FALSE,range = "B7:B357")
 autos01 = ts(autos01$...1, frequency = 12, start = c(1996,1))
-autos02 = read_xlsx("15- Automotriz.xlsx",sheet = "Exportaciones",col_names = FALSE,range = "B7:B315")
+autos02 = read_xlsx("15- Automotriz.xlsx",sheet = "Exportaciones",col_names = FALSE,range = "B7:B321")
 autos02 = ts(autos02$...1, frequency = 12, start = c(1999,1))
 
 autos01d = seas(autos01, x11="")

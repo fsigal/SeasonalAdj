@@ -2,13 +2,13 @@ library(readxl)
 library(writexl)
 library(seasonal)
 
-finan01 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Préstamos RC deflact MIX",col_names = FALSE,range = "B6:B120")
+finan01 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Préstamos RC deflact MIX",col_names = FALSE,range = "B6:B123")
 finan01 = ts(finan01$...1, frequency = 4, start = c(1996,1))
-finan02 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Depósitos RC deflact MIX",col_names = FALSE,range = "B6:B120")
+finan02 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Depósitos RC deflact MIX",col_names = FALSE,range = "B6:B123")
 finan02 = ts(finan02$...1, frequency = 4, start = c(1996,1))
-finan03 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Dep C Deflac MIX",col_names = FALSE,range = "B6:B120")
+finan03 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Dep C Deflac MIX",col_names = FALSE,range = "B6:B123")
 finan03 = ts(finan03$...1, frequency = 4, start = c(1996,1))
-finan04 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Dep SF Deflac MIX",col_names = FALSE,range = "B6:B120")
+finan04 = read_xlsx("17- Sistema Financiero.xlsx",sheet = "Dep SF Deflac MIX",col_names = FALSE,range = "B6:B123")
 finan04 = ts(finan04$...1, frequency = 4, start = c(1996,1))
 
 
