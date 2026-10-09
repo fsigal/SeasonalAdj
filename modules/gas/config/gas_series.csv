@@ -1,0 +1,11 @@
+series_id,sheet,date_col,value_col
+gas01,Res_C,1,2
+gas02,Res_SF,1,2
+gas03,Res_ER,1,2
+gas04,Ind_C,1,2
+gas05,Ind_SF,1,2
+gas06,Ind_ER,1,2
+gas07,Total_C,1,2
+gas08,Total_ER,1,2
+gas09,Total_SF,1,2
+gas10,TOTAL_ER_2,1,4
