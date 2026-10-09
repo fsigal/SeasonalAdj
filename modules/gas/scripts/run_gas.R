@@ -2,6 +2,9 @@
 required <- c("readxl", "writexl", "seasonal")
 missing <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
 if (length(missing)) stop("Instalar paquetes: ", paste(missing, collapse = ", "))
+# Este script se ejecuta desde modules/gas, según scripts/run_gas.R.
+source(file.path("..", "..", "R", "load_core.R"))
+sa_load_core(repo_root = file.path("..", ".."), envir = environment())
 source("R/import_gas.R")
 source("R/adjust_gas.R")
 source("R/export_gas.R")

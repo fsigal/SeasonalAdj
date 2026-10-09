@@ -1,13 +1,8 @@
-# Adaptadores para compatibilidad con Gas Core v1.0.
-# Cargar primero R/load_core.R mediante el ejecutor sectorial.
-parse_gas_month <- function(x) parse_sa_month(x)
-read_gas_sheet <- function(file, sheet, date_col = 1L, value_col = 2L) {
-  read_sa_sheet(file, sheet, date_col, value_col)
-}
-read_gas_series <- function(file, catalog) read_sa_series(file, catalog)
+# Funciones reutilizables: importación de series mensuales desde Excel.
+# Extraído de Gas Core v1.0; no modifica el algoritmo de lectura validado.
 # Importación basada en fechas: una hoja por serie, columna 1 = mes,
 # columna de valor configurable por catálogo (gas10 = D).
-parse_gas_month <- function(x) {
+parse_sa_month <- function(x) {
   if (inherits(x, "POSIXt") || inherits(x, "Date")) {
     d <- as.Date(x)
     return(as.Date(format(d, "%Y-%m-01")))
@@ -34,7 +29,7 @@ parse_gas_month <- function(x) {
   out
 }
 
-read_gas_sheet <- function(file, sheet, date_col = 1L, value_col = 2L) {
+read_sa_sheet <- function(file, sheet, date_col = 1L, value_col = 2L) {
   date_col <- as.integer(date_col); value_col <- as.integer(value_col)
   if (anyNA(c(date_col, value_col)) || any(c(date_col, value_col) < 1L) || date_col == value_col)
     stop(sheet, ": columnas de fecha/valor inválidas")
@@ -47,7 +42,7 @@ read_gas_sheet <- function(file, sheet, date_col = 1L, value_col = 2L) {
   value_cells <- raw[[value_col]]
   # Para preservar las fechas Excel, convertir Date/POSIX antes de serializar.
   dates <- as.Date(rep(NA_character_, length(date_cells)))
-  for (j in seq_along(date_cells)) dates[j] <- parse_gas_month(date_cells[[j]])[1]
+  for (j in seq_along(date_cells)) dates[j] <- parse_sa_month(date_cells[[j]])[1]
   # Evitar interpretar códigos de otras filas como fechas válidas sin valores.
   values <- suppressWarnings(as.numeric(vapply(value_cells, function(z)
     if (length(z)==0 || is.na(z[1])) NA_character_ else as.character(z[1]), character(1))))
@@ -71,7 +66,7 @@ read_gas_sheet <- function(file, sheet, date_col = 1L, value_col = 2L) {
        data = data.frame(date = dates, value = values))
 }
 
-read_gas_series <- function(file, catalog) {
+read_sa_series <- function(file, catalog) {
   if (!file.exists(file)) stop("No se encontró el Excel: ", file)
   stopifnot(all(c("series_id", "sheet") %in% names(catalog)))
   if (anyDuplicated(catalog$series_id)) stop("series_id duplicados")
@@ -79,7 +74,7 @@ read_gas_series <- function(file, catalog) {
   if (!"value_col" %in% names(catalog)) catalog$value_col <- 2L
   result <- setNames(vector("list", nrow(catalog)), catalog$series_id)
   for (i in seq_len(nrow(catalog))) {
-    result[[i]] <- read_gas_sheet(file, catalog$sheet[i], catalog$date_col[i], catalog$value_col[i])$series
+    result[[i]] <- read_sa_sheet(file, catalog$sheet[i], catalog$date_col[i], catalog$value_col[i])$series
   }
   result
 }

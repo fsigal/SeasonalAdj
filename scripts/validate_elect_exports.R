@@ -1,0 +1,5 @@
+if (!file.exists("modules/elect/tests/validate_elect_exports.R")) stop("Ejecutar desde la raíz")
+local({wd <- getwd(); on.exit(setwd(wd), add = TRUE)
+  setwd("modules/elect")
+  source("tests/validate_elect_exports.R", local = TRUE)
+})
