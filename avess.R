@@ -3,16 +3,16 @@ library(writexl)
 library(seasonal)
 library(forecast)
 
-# Julio 2025
-aves01 = read_xlsx("23-Aves.xlsx",sheet = "SF",col_names = FALSE,range = "B6:B216")
+# Data import through July 2026
+aves01 = read_xlsx("23-Aves.xlsx",sheet = "SF",col_names = FALSE,range = "B6:B228")
 aves01 = ts(aves01$...1, frequency = 12, start = c(2008,1))
-aves02 = read_xlsx("23-Aves.xlsx",sheet = "C",col_names = FALSE,range = "B6:B216")
+aves02 = read_xlsx("23-Aves.xlsx",sheet = "C",col_names = FALSE,range = "B6:B228")
 aves02 = ts(aves02$...1, frequency = 12, start = c(2008,1))
-aves03 = read_xlsx("23-Aves.xlsx",sheet = "ER",col_names = FALSE,range = "B6:B216")
+aves03 = read_xlsx("23-Aves.xlsx",sheet = "ER",col_names = FALSE,range = "B6:B228")
 aves03 = ts(aves03$...1, frequency = 12, start = c(2008,1))
-aves04 = read_xlsx("23-Aves.xlsx",sheet = "Precio Pollo",col_names = FALSE,range = "B4:B130")
+aves04 = read_xlsx("23-Aves.xlsx",sheet = "Precio Pollo",col_names = FALSE,range = "B4:B142")
 aves04 = ts(aves04$...1, frequency = 12, start = c(2015,1))
-aves05 = read_xlsx("23-Aves.xlsx",sheet = "Precio deflactado Pollo",col_names = FALSE,range = "B4:B130")
+aves05 = read_xlsx("23-Aves.xlsx",sheet = "Precio deflactado Pollo",col_names = FALSE,range = "B4:B142")
 aves05 = ts(aves05$...1, frequency = 12, start = c(2015,1))
 
 model04 = auto.arima(aves04)
@@ -20,12 +20,14 @@ forecast(model04,h=3)
 model05 = auto.arima(aves05)
 forecast(model05,h=3)
 
+# Seasonal Adjustment
 aves01d = seas(aves01, x11="")
 aves02d = seas(aves02, x11="")
 aves03d = seas(aves03, x11="")
 aves04d = seas(aves04, x11="")
 aves05d = seas(aves05, x11="")
 
+# Export D11 and D12 tables to Excel sheets
 aves01_conc = cbind(aves01d$series$d11,blanco,blanco,aves01d$series$d12)
 write_xlsx(as.data.frame(aves01_conc),"aves01_d11_d12.xlsx")
 aves02_conc = cbind(aves02d$series$d11,blanco,blanco,aves02d$series$d12)

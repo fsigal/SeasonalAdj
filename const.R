@@ -3,22 +3,22 @@ library(writexl)
 library(seasonal)
 library(forecast)
 
-# Julio 2025
-const01 = read_xlsx("14- Construccion.xlsx",sheet = "Cemento_SF",col_names = FALSE,range = "B6:B264")
+# Data import through July 2026
+const01 = read_xlsx("14- Construccion.xlsx",sheet = "Cemento_SF",col_names = FALSE,range = "B6:B276")
 const01 = ts(const01$...1, frequency = 12, start = c(2004,1))
-const02 = read_xlsx("14- Construccion.xlsx",sheet = "Cemento_Cba",col_names = FALSE,range = "B6:B264")
+const02 = read_xlsx("14- Construccion.xlsx",sheet = "Cemento_Cba",col_names = FALSE,range = "B6:B276")
 const02 = ts(const02$...1, frequency = 12, start = c(2004,1))
-const03 = read_xlsx("14- Construccion.xlsx",sheet = "Cemento_ER",col_names = FALSE,range = "B6:B264")
+const03 = read_xlsx("14- Construccion.xlsx",sheet = "Cemento_ER",col_names = FALSE,range = "B6:B276")
 const03 = ts(const03$...1, frequency = 12, start = c(2004,1))
-const04 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo SF",col_names = FALSE,range = "B4:B221")
+const04 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo SF",col_names = FALSE,range = "B4:B232")
 const04 = ts(const04$...1, frequency = 12, start = c(2007,6))
-const05 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo ER",col_names = FALSE,range = "B4:B221")
+const05 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo ER",col_names = FALSE,range = "B4:B232")
 const05 = ts(const05$...1, frequency = 12, start = c(2007,6))
-const06 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo C",col_names = FALSE,range = "B4:B221")
+const06 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo C",col_names = FALSE,range = "B4:B232")
 const06 = ts(const06$...1, frequency = 12, start = c(2007,6))
-const07 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo BA sin CABA",col_names = FALSE,range = "B4:B221")
+const07 = read_xlsx("14- Construccion.xlsx",sheet = "Empleo BA sin CABA",col_names = FALSE,range = "B4:B232")
 const07 = ts(const07$...1, frequency = 12, start = c(2007,6))
-const08 = read_xlsx("14- Construccion.xlsx",sheet = "Nacion",col_names = FALSE,range = "B4:B221")
+const08 = read_xlsx("14- Construccion.xlsx",sheet = "Nacion",col_names = FALSE,range = "B4:B232")
 const08 = ts(const08$...1, frequency = 12, start = c(2007,6))
 
 model04 = auto.arima(const04)
@@ -32,7 +32,7 @@ forecast(model07,h=3)
 model08 = auto.arima(const08)
 forecast(model08,h=3)
 
-
+# Seasonal Adjustment
 const01d = seas(const01, x11="")
 const02d = seas(const02, x11="")
 const03d = seas(const03, x11="")
@@ -42,6 +42,7 @@ const06d = seas(const06, x11="")
 const07d = seas(const07, x11="")
 const08d = seas(const08, x11="")
 
+# Export D11 and D12 tables to Excel
 const01_conc = cbind(const01d$series$d11,blanco,blanco,const01d$series$d12)
 write_xlsx(as.data.frame(const01_conc),"const01_d11_d12.xlsx")
 const02_conc = cbind(const02d$series$d11,blanco,blanco,const02d$series$d12)

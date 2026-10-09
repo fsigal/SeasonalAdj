@@ -2,27 +2,27 @@ library(readxl)
 library(writexl)
 library(seasonal)
 
-# Importación de datos hasta Julio 2025
-paten01 = read_xlsx("22- Patentamientos.xlsx",sheet = "Autos SF",col_names = FALSE,range = "B5:B371")
+# Data import through July 2026
+paten01 = read_xlsx("22- Patentamientos.xlsx",sheet = "Autos SF",col_names = FALSE,range = "B5:B383")
 paten01 = ts(paten01$...1, frequency = 12, start = c(1995,1))
-paten02 = read_xlsx("22- Patentamientos.xlsx",sheet = "Autos C",col_names = FALSE,range = "B5:B371")
+paten02 = read_xlsx("22- Patentamientos.xlsx",sheet = "Autos C",col_names = FALSE,range = "B5:B383")
 paten02 = ts(paten02$...1, frequency = 12, start = c(1995,1))
-paten03 = read_xlsx("22- Patentamientos.xlsx",sheet = "Autos ER",col_names = FALSE,range = "B5:B371")
+paten03 = read_xlsx("22- Patentamientos.xlsx",sheet = "Autos ER",col_names = FALSE,range = "B5:B383")
 paten03 = ts(paten03$...1, frequency = 12, start = c(1995,1))
-paten04 = read_xlsx("22- Patentamientos.xlsx",sheet = "Motos SF",col_names = FALSE,range = "B5:B227")
+paten04 = read_xlsx("22- Patentamientos.xlsx",sheet = "Motos SF",col_names = FALSE,range = "B5:B239")
 paten04 = ts(paten04$...1, frequency = 12, start = c(2007,1))
-paten05 = read_xlsx("22- Patentamientos.xlsx",sheet = "Motos C",col_names = FALSE,range = "B5:B227")
+paten05 = read_xlsx("22- Patentamientos.xlsx",sheet = "Motos C",col_names = FALSE,range = "B5:B239")
 paten05 = ts(paten05$...1, frequency = 12, start = c(2007,1))
-paten06 = read_xlsx("22- Patentamientos.xlsx",sheet = "Motos ER",col_names = FALSE,range = "B5:B227")
+paten06 = read_xlsx("22- Patentamientos.xlsx",sheet = "Motos ER",col_names = FALSE,range = "B5:B239")
 paten06 = ts(paten06$...1, frequency = 12, start = c(2007,1))
-paten07 = read_xlsx("22- Patentamientos.xlsx",sheet = "Maquin SF",col_names = FALSE,range = "B5:B146")
+paten07 = read_xlsx("22- Patentamientos.xlsx",sheet = "Maquin SF",col_names = FALSE,range = "B5:B158")
 paten07 = ts(paten07$...1, frequency = 12, start = c(2013,10))
-paten08 = read_xlsx("22- Patentamientos.xlsx",sheet = "Maquin C",col_names = FALSE,range = "B5:B146")
+paten08 = read_xlsx("22- Patentamientos.xlsx",sheet = "Maquin C",col_names = FALSE,range = "B5:B158")
 paten08 = ts(paten08$...1, frequency = 12, start = c(2013,10))
-paten09 = read_xlsx("22- Patentamientos.xlsx",sheet = "Maquin ER",col_names = FALSE,range = "B5:B146")
+paten09 = read_xlsx("22- Patentamientos.xlsx",sheet = "Maquin ER",col_names = FALSE,range = "B5:B158")
 paten09 = ts(paten09$...1, frequency = 12, start = c(2013,10))
 
-# Desestacionalización de las series
+# Seasonal adjustment
 paten01d = seas(paten01, x11="")
 paten02d = seas(paten02, x11="")
 paten03d = seas(paten03, x11="")
@@ -33,11 +33,7 @@ paten07d = seas(paten07, x11="")
 paten08d = seas(paten08, x11="")
 paten09d = seas(paten09, x11="")
 
-# Exportacion de datos D11 y D12 a Excel
-write_xlsx(as.data.frame(paten01d$series$d11),"Patentamientos desestacionalizados.xlsx")
-write_xlsx(as.data.frame(paten01d$series$d12),"Patentamientos tendencia ciclo.xlsx")
-
-
+# Tables D11 and D12 export to Excel
 paten01_conc = cbind(paten01d$series$d11,blanco,blanco,paten01d$series$d12)
 write_xlsx(as.data.frame(paten01_conc),"paten01_d11_d12.xlsx")
 paten02_conc = cbind(paten02d$series$d11,blanco,blanco,paten02d$series$d12)

@@ -6,20 +6,20 @@ library(forecast)
 
 blanco = 0
 
-# Julio 2025
-merca01 = read_xlsx("11- Mercado laboral.xlsx",sheet = "EIL GP Mens",col_names = FALSE,range = "B5:B242")
+# Data import through July 2026
+merca01 = read_xlsx("11- Mercado laboral.xlsx",sheet = "EIL GP Mens",col_names = FALSE,range = "B5:B254")
 merca01 = ts(merca01$...1, frequency = 12, start = c(2005,10))
-merca02 = read_xlsx("11- Mercado laboral.xlsx",sheet = "EIL GR Mens",col_names = FALSE,range = "B5:B318")
+merca02 = read_xlsx("11- Mercado laboral.xlsx",sheet = "EIL GR Mens",col_names = FALSE,range = "B5:B330")
 merca02 = ts(merca02$...1, frequency = 12, start = c(1999,6))
-merca03 = read_xlsx("11- Mercado laboral.xlsx",sheet = "EIL GC Mens",col_names = FALSE,range = "B5:B318")
+merca03 = read_xlsx("11- Mercado laboral.xlsx",sheet = "EIL GC Mens",col_names = FALSE,range = "B5:B330")
 merca03 = ts(merca03$...1, frequency = 12, start = c(1999,6))
-merca04 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA C",col_names = FALSE,range = "B5:B203")
+merca04 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA C",col_names = FALSE,range = "B5:B215")
 merca04 = ts(merca04$...1, frequency = 12, start = c(2009,1))
-merca05 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA ER",col_names = FALSE,range = "B5:B203")
+merca05 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA ER",col_names = FALSE,range = "B5:B215")
 merca05 = ts(merca05$...1, frequency = 12, start = c(2009,1))
-merca06 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA SF",col_names = FALSE,range = "B5:B203")
+merca06 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA SF",col_names = FALSE,range = "B5:B215")
 merca06 = ts(merca06$...1, frequency = 12, start = c(2009,1))
-merca07 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA - Total Nación",col_names = FALSE,range = "B3:B199")
+merca07 = read_xlsx("11- Mercado laboral.xlsx",sheet = "SIPA - Total Nación",col_names = FALSE,range = "B3:B213")
 merca07 = ts(merca07$...1, frequency = 12, start = c(2009,1))
 merca08 = read_xlsx("11- Mercado laboral.xlsx",sheet = "Salarios Nacion",col_names = FALSE,range = "B5:B179")
 merca08 = ts(merca08$...1, frequency = 12, start = c(2009,1))
@@ -46,7 +46,7 @@ forecast(model09,h=3)
 model10 = auto.arima(merca10)
 forecast(model10,h=3)
 
-
+# Seasonal Adjustment
 merca01d = seas(merca01, x11="")
 merca02d = seas(merca02, x11="")
 merca03d = seas(merca03, x11="")
@@ -58,6 +58,7 @@ merca09d = seas(merca09, x11="")
 merca10d = seas(merca10, x11="")
 merca11d = seas(merca11, x11="")
 
+# Export D11 and D12 tables to Excel
 merca01_conc = cbind(merca01d$series$d11,blanco,blanco,merca01d$series$d12)
 write_xlsx(as.data.frame(merca01_conc),"merca01_d11_d12.xlsx")
 merca02_conc = cbind(merca02d$series$d11,blanco,blanco,merca02d$series$d12)

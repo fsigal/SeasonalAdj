@@ -2,16 +2,16 @@ library(readxl)
 library(writexl)
 library(seasonal)
 
-# Julio 2025
-porci01 = read_xlsx("25-Porcinos.xlsx",sheet = "SF",col_names = FALSE,range = "B5:B179")
+# Data import through July 2026
+porci01 = read_xlsx("25-Porcinos.xlsx",sheet = "SF",col_names = FALSE,range = "B5:B191")
 porci01 = ts(porci01$...1, frequency = 12, start = c(2011,1))
-porci02 = read_xlsx("25-Porcinos.xlsx",sheet = "C",col_names = FALSE,range = "B5:B179")
+porci02 = read_xlsx("25-Porcinos.xlsx",sheet = "C",col_names = FALSE,range = "B5:B191")
 porci02 = ts(porci02$...1, frequency = 12, start = c(2011,1))
-porci03 = read_xlsx("25-Porcinos.xlsx",sheet = "ER",col_names = FALSE,range = "B5:B179")
+porci03 = read_xlsx("25-Porcinos.xlsx",sheet = "ER",col_names = FALSE,range = "B5:B191")
 porci03 = ts(porci03$...1, frequency = 12, start = c(2011,1))
-porci04 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio Capón General",col_names = FALSE,range = "B4:B133")
+porci04 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio Capón General",col_names = FALSE,range = "B4:B145")
 porci04 = ts(porci04$...1, frequency = 12, start = c(2014,10))
-porci05 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio deflactado Capón General",col_names = FALSE,range = "B4:B133")
+porci05 = read_xlsx("25-Porcinos.xlsx",sheet = "Precio deflactado Capón General",col_names = FALSE,range = "B4:B145")
 porci05 = ts(porci05$...1, frequency = 12, start = c(2014,10))
 
 model04 = auto.arima(porci04)
@@ -19,14 +19,14 @@ forecast(model04,h=3)
 model05 = auto.arima(porci05)
 forecast(model05,h=3)
 
-
-
+# Seasonal adjustment
 porci01d = seas(porci01, x11="")
 porci02d = seas(porci02, x11="")
 porci03d = seas(porci03, x11="")
 porci04d = seas(porci04, x11="")
 porci05d = seas(porci05, x11="")
 
+# Tables D11 and D12 export to Excel
 porci01_conc = cbind(porci01d$series$d11,blanco,blanco,porci01d$series$d12)
 write_xlsx(as.data.frame(porci01_conc),"porci01_d11_d12.xlsx")
 porci02_conc = cbind(porci02d$series$d11,blanco,blanco,porci02d$series$d12)

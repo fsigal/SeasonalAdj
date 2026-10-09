@@ -1,42 +1,44 @@
 library(readxl)
 library(writexl)
 library(seasonal)
+library(forecast)
+library(glmnet)
 
-# Julio 2025
-lacte01 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P al prod SF (Pag Sta. fe)",col_names = FALSE,range = "B5:B191")
+# Data import through July 2026
+lacte01 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P al prod SF (Pag Sta. fe)",col_names = FALSE,range = "B5:B203")
 lacte01 = ts(lacte01$...1, frequency = 12, start = c(2010,1))
-lacte02 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P CTE SF (Pag Sta. fe)",col_names = FALSE,range = "B5:B191")
+lacte02 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P CTE SF (Pag Sta. fe)",col_names = FALSE,range = "B5:B203")
 lacte02 = ts(lacte02$...1, frequency = 12, start = c(2010,1))
-lacte03 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P al Prod SF (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte03 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P al Prod SF (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte03 = ts(lacte03$...1, frequency = 12, start = c(2016,11))
-lacte04 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P CTE SF (MinAgro)",col_names = FALSE,range = "B4:B108")
+lacte04 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P CTE SF (MinAgro)",col_names = FALSE,range = "B4:B120")
 lacte04 = ts(lacte04$...1, frequency = 12, start = c(2016,11))
-lacte05 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P al Prod Cba (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte05 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P al Prod Cba (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte05 = ts(lacte05$...1, frequency = 12, start = c(2016,11))
-lacte06 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P CTE Cba (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte06 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P CTE Cba (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte06 = ts(lacte06$...1, frequency = 12, start = c(2016,11))
-lacte07 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P al Prod ER (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte07 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P al Prod ER (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte07 = ts(lacte07$...1, frequency = 12, start = c(2016,11))
-lacte08 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P CTE ER (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte08 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P CTE ER (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte08 = ts(lacte08$...1, frequency = 12, start = c(2016,11))
-lacte09 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P al prod RC (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte09 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P al prod RC (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte09 = ts(lacte09$...1, frequency = 12, start = c(2016,11))
-lacte10 = read_xlsx("01- Sector lácteo.xlsx",sheet = "P CTE RC (MinAgr)",col_names = FALSE,range = "B4:B108")
+lacte10 = read_xlsx("01- Sector lacteo.xlsx",sheet = "P CTE RC (MinAgr)",col_names = FALSE,range = "B4:B120")
 lacte10 = ts(lacte10$...1, frequency = 12, start = c(2016,11))
-lacte11 = read_xlsx("01- Sector lácteo.xlsx",sheet = "Precio internacional",col_names = FALSE,range = "B4:B334")
+lacte11 = read_xlsx("01- Sector lacteo.xlsx",sheet = "Precio internacional",col_names = FALSE,range = "B4:B346")
 lacte11 = ts(lacte11$...1, frequency = 12, start = c(1998,1))
-lacte12 = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod RC",col_names = FALSE,range = "B112:B370")
+lacte12 = read_xlsx("01- Sector lacteo.xlsx",sheet = "Prod RC",col_names = FALSE,range = "B112:B382")
 lacte12 = ts(lacte12$...1, frequency = 12, start = c(2004,1))
-lacte13 = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod SF",col_names = FALSE,range = "B4:B370")
+lacte13 = read_xlsx("01- Sector lacteo.xlsx",sheet = "Prod SF",col_names = FALSE,range = "B4:B382")
 lacte13 = ts(lacte13$...1, frequency = 12, start = c(1995,1))
-lacte14 = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod Nacional",col_names = FALSE,range = "B5:B131")
+lacte14 = read_xlsx("01- Sector lacteo.xlsx",sheet = "Prod Nacional",col_names = FALSE,range = "B5:B143")
 lacte14 = ts(lacte14$...1, frequency = 12, start = c(2015,1))
-lacte15 = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod Resto",col_names = FALSE,range = "B5:B131")
+lacte15 = read_xlsx("01- Sector lacteo.xlsx",sheet = "Prod Resto",col_names = FALSE,range = "B5:B143")
 lacte15 = ts(lacte15$...1, frequency = 12, start = c(2015,1))
-lacte19 = read_xlsx("01- Sector lácteo.xlsx",sheet = "Exportaciones Min. Agroind.",col_names = FALSE,range = "B4:B418")
+lacte19 = read_xlsx("01- Sector lacteo.xlsx",sheet = "Exportaciones Min. Agroind.",col_names = FALSE,range = "B4:B431")
 lacte19 = ts(lacte19$...1, frequency = 12, start = c(1991,1))
 
-
+# Seasonal adjustment
 lacte01d = seas(lacte01, x11="")
 lacte02d = seas(lacte02, x11="")
 lacte03d = seas(lacte03, x11="")
@@ -56,6 +58,7 @@ lacte19d = seas(lacte19, x11="")
 
 blanco=0
 
+# Tables D11 and D12 export to Excel
 lacte01_conc = cbind(lacte01d$series$d11,blanco,blanco,lacte01d$series$d12)
 write_xlsx(as.data.frame(lacte01_conc),"lacte01_d11_d12.xlsx")
 lacte02_conc = cbind(lacte02d$series$d11,blanco,blanco,lacte02d$series$d12)
@@ -108,3 +111,53 @@ lacte17_conc = cbind(lacte17d$series$d11,blanco,blanco,lacte17d$series$d12)
 write_xlsx(as.data.frame(lacte17_conc),"lacte17_d11_d12.xlsx")
 lacte18_conc = cbind(lacte18d$series$d11,blanco,blanco,lacte18d$series$d12)
 write_xlsx(as.data.frame(lacte18_conc),"lacte18_d11_d12.xlsx")
+
+### Estimate Region Centro production 
+### Run this every time you need to estimate
+### Changing only the periods to estimate
+region = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod RC",col_names = FALSE,range = "B112:B279")
+region = ts(region$...1, frequency = 12, start = c(2004,1))
+provin = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod SF",col_names = FALSE,range = "B112:B279")
+provin = ts(provin$...1, frequency = 12, start = c(2004,1))
+
+train_region <- window(region,end=c(2016,12))
+train_provin <- window(provin,end=c(2016,12))
+test_region <- window(region,start=c(2017,1))
+test_provin <- window(provin,start=c(2017,1))
+
+# Linear Regression on train data
+fit <- lm(train_region ~ train_provin)
+summary(fit)
+
+# Arima model fitted to errors
+fit2 <- predict(fit,train_provin)
+error <- train_region - fit2
+fit3 <- auto.arima(error)
+fit3
+
+# Forecasts of errors
+fcast <- forecast(fit3,12)
+
+# Estimate future values with known regressors and add error
+fit4 <- test_provin * fit$coefficients[2] + fit$coefficients[1]
+fcast2 <- fit4 + fcast$mean
+fcast2
+
+# Diagnose in test set: R2 = 0.97
+cor(fcast2,test_region)^2
+
+# Import Last 3 observations from ProdSF
+inp = read_xlsx("01- Sector lácteo.xlsx",sheet = "Prod SF",col_names = FALSE,range = "B373:B375")
+inp
+
+# Estimate ARIMA errors for 2025-10 to 12
+fcast <- forecast(fit3,96)
+fcast$mean[94:96]
+
+# Estimate Regression forecasts
+inp2 <- inp * fit$coefficients[2] + fit$coefficients[1]
+inp2
+
+# Add Regression predictions and Arima errors
+input_values <- inp2 + fcast$mean[94:96]
+input_values

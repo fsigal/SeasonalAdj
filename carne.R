@@ -3,20 +3,20 @@ library(writexl)
 library(seasonal)
 library(forecast)
 
-# Mayo 2025
-carne01 = read_xlsx("02- Sector carnes.xlsx",sheet = "Liniers",col_names = FALSE,range = "B6:B394")
+# Data import through July 2026
+carne01 = read_xlsx("02- Sector carnes.xlsx",sheet = "Liniers",col_names = FALSE,range = "B6:B408")
 carne01 = ts(carne01$...1, frequency = 12, start = c(1993,1))
-carne02 = read_xlsx("02- Sector carnes.xlsx",sheet = "Precio Deflact Liniers",col_names = FALSE,range = "B6:B358")
+carne02 = read_xlsx("02- Sector carnes.xlsx",sheet = "Precio Deflact Liniers",col_names = FALSE,range = "B6:B372")
 carne02 = ts(carne02$...1, frequency = 12, start = c(1996,1))
-carne03 = read_xlsx("02- Sector carnes.xlsx",sheet = "SF",col_names = FALSE,range = "B6:B358")
+carne03 = read_xlsx("02- Sector carnes.xlsx",sheet = "SF",col_names = FALSE,range = "B6:B372")
 carne03 = ts(carne03$...1, frequency = 12, start = c(1996,1))
-carne04 = read_xlsx("02- Sector carnes.xlsx",sheet = "C",col_names = FALSE,range = "B6:B358")
+carne04 = read_xlsx("02- Sector carnes.xlsx",sheet = "C",col_names = FALSE,range = "B6:B372")
 carne04 = ts(carne04$...1, frequency = 12, start = c(1996,1))
-carne05 = read_xlsx("02- Sector carnes.xlsx",sheet = "ER",col_names = FALSE,range = "B6:B358")
+carne05 = read_xlsx("02- Sector carnes.xlsx",sheet = "ER",col_names = FALSE,range = "B6:B372")
 carne05 = ts(carne05$...1, frequency = 12, start = c(1996,1))
-carne09 = read_xlsx("02- Sector carnes.xlsx",sheet = "Exportaciones Tn",col_names = FALSE,range = "B4:B200")
+carne09 = read_xlsx("02- Sector carnes.xlsx",sheet = "Exportaciones Tn",col_names = FALSE,range = "B4:B214")
 carne09 = ts(carne09$...1, frequency = 12, start = c(2009,1))
-carne10 = read_xlsx("02- Sector carnes.xlsx",sheet = "Exportaciones U$D",col_names = FALSE,range = "B4:B200")
+carne10 = read_xlsx("02- Sector carnes.xlsx",sheet = "Exportaciones U$D",col_names = FALSE,range = "B4:B214")
 carne10 = ts(carne10$...1, frequency = 12, start = c(2009,1))
 
 model01 = auto.arima(carne01)
@@ -37,7 +37,7 @@ carne08 = read_xlsx("05- Supermercados por rubros.xlsx",sheet = "Vtas superm car
 carne08 = ts(carne08$...1, frequency = 12, start = c(2005,10))
 
 
-
+# Seasonal Adjustment
 carne01d = seas(carne01, x11="")
 carne02d = seas(carne02, x11="")
 carne03d = seas(carne03, x11="")
@@ -50,6 +50,7 @@ carne06d = seas(carne06, x11="")
 carne07d = seas(carne07, x11="")
 carne08d = seas(carne08, x11="")
 
+# Tables D11 and D12 export to Excel
 carne01_conc = cbind(carne01d$series$d11,blanco,blanco,carne01d$series$d12)
 write_xlsx(as.data.frame(carne01_conc),"carne01_d11_d12.xlsx")
 carne02_conc = cbind(carne02d$series$d11,blanco,blanco,carne02d$series$d12)

@@ -2,30 +2,29 @@ library(readxl)
 library(writexl)
 library(seasonal)
 
-# Julio 2025
-preci01 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Super",col_names = FALSE,range = "B5:B227")
+# Data import through July 2026
+preci01 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Super",col_names = FALSE,range = "B5:B239")
 preci01 = ts(preci01$...1, frequency = 12, start = c(2007,1))
-preci02 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Super deflactado",col_names = FALSE,range = "B5:B227")
+preci02 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Super deflactado",col_names = FALSE,range = "B5:B239")
 preci02 = ts(preci02$...1, frequency = 12, start = c(2007,1))
-preci03 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Premium",col_names = FALSE,range = "B5:B227")
+preci03 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Premium",col_names = FALSE,range = "B5:B239")
 preci03 = ts(preci03$...1, frequency = 12, start = c(2007,1))
-preci04 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Premium deflactado",col_names = FALSE,range = "B5:B227")
+preci04 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Premium deflactado",col_names = FALSE,range = "B5:B239")
 preci04 = ts(preci04$...1, frequency = 12, start = c(2007,1))
-preci05 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 2",col_names = FALSE,range = "B5:B227")
+preci05 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 2",col_names = FALSE,range = "B5:B239")
 preci05 = ts(preci05$...1, frequency = 12, start = c(2007,1))
-preci06 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 2 deflactado",col_names = FALSE,range = "B6:B228")
+preci06 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 2 deflactado",col_names = FALSE,range = "B6:B240")
 preci06 = ts(preci06$...1, frequency = 12, start = c(2007,1))
-preci07 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 3",col_names = FALSE,range = "B5:B202")
+preci07 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 3",col_names = FALSE,range = "B5:B214")
 preci07 = ts(preci07$...1, frequency = 12, start = c(2009,2))
-preci08 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 3 Deflactado",col_names = FALSE,range = "B5:B202")
+preci08 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "Grado 3 Deflactado",col_names = FALSE,range = "B5:B214")
 preci08 = ts(preci08$...1, frequency = 12, start = c(2009,2))
-preci09 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "GNC",col_names = FALSE,range = "B5:B227")
+preci09 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "GNC",col_names = FALSE,range = "B5:B239")
 preci09 = ts(preci09$...1, frequency = 12, start = c(2007,1))
-preci10 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "GNC deflactado",col_names = FALSE,range = "B5:B227")
+preci10 = read_xlsx("24 -Precio combustible RC.xlsx",sheet = "GNC deflactado",col_names = FALSE,range = "B5:B239")
 preci10 = ts(preci10$...1, frequency = 12, start = c(2007,1))
 
-getwd()
-
+# Seasonal adjustment
 preci01d = seas(preci01, x11="")
 preci02d = seas(preci02, x11="")
 preci03d = seas(preci03, x11="")
@@ -37,8 +36,7 @@ preci08d = seas(preci08, x11="")
 preci09d = seas(preci09, x11="")
 preci10d = seas(preci10, x11="")
 
-?seas
-
+# Tables D11 and D12 export to Excel
 preci01_conc = cbind(preci01d$series$d11,blanco,blanco,preci01d$series$d12)
 write_xlsx(as.data.frame(preci01_conc),"preci01_d11_d12.xlsx")
 preci02_conc = cbind(preci02d$series$d11,blanco,blanco,preci02d$series$d12)
