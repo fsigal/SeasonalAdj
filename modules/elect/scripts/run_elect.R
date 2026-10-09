@@ -1,0 +1,22 @@
+# Ejecución desde modules/elect, invocada por scripts/run_elect.R
+required <- c("readxl", "writexl", "seasonal")
+missing <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing)) stop("Instalar paquetes: ", paste(missing, collapse = ", "))
+source(file.path("..", "..", "R", "load_core.R"))
+sa_load_core(repo_root = file.path("..", ".."), envir = environment())
+source("R/import_elect.R")
+source("R/adjust_elect.R")
+source("R/export_elect.R")
+input_file <- file.path("..", "..", "09- Electricidad.xlsx")
+if (!file.exists(input_file)) input_file <- file.path("data", "raw", "09- Electricidad.xlsx")
+if (!file.exists(input_file)) stop("Falta 09- Electricidad.xlsx en la raíz del repositorio o modules/elect/data/raw/")
+catalog <- utils::read.csv("config/elect_series.csv", stringsAsFactors = FALSE, check.names = FALSE, fileEncoding = "UTF-8")
+series_list <- read_elect_series(input_file, catalog)
+message("Importadas ", length(series_list), " series de electricidad")
+models <- run_elect_adjustment(series_list)
+dir.create("outputs", recursive = TRUE, showWarnings = FALSE)
+saveRDS(list(series = series_list, models = models, catalog = catalog,
+             session = utils::sessionInfo()), "outputs/elect_run.rds")
+export_elect_legacy(models, "outputs/legacy")
+export_elect_dated(models, "outputs/dated")
+message("Electricidad: ajuste X-11 generado en outputs/")

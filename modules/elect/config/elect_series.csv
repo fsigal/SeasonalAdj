@@ -1,0 +1,13 @@
+series_id,sheet,date_col,value_col,legacy_start_year,legacy_start_month,legacy_range
+elect01,SF,1,2,1998,1,B4:B346
+elect02,C,1,2,1995,1,B4:B382
+elect03,ER,1,2,1998,1,B4:B346
+elect04,Res-SF,1,2,2012,1,B5:B179
+elect05,C+I-SF,1,2,2012,1,B5:B179
+elect06,Gumas-SF,1,2,1998,1,B4:B346
+elect07,Res-C,1,2,2012,1,B5:B179
+elect08,C+I-C,1,2,2012,1,B5:B179
+elect09,Gumas-C,1,2,1998,1,B4:B346
+elect10,Res-ER,1,2,2012,1,B5:B179
+elect11,C+I-ER,1,2,2012,1,B5:B179
+elect12,Gumas-ER,1,2,1998,1,B4:B346
